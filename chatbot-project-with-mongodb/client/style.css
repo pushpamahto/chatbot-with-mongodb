@@ -695,23 +695,33 @@ body.show-chat-history .chat-history-sidebar {
 
 
 /*-----------media query--------- */
-@media (max-width:520px) {
+
+  @media (max-width:498px) {
     #chatbot-toggler {
         right: 20px;
-        bottom: 20px;
+        bottom: 25px;
+        width: 35px;
+        height:35px;
+        padding: 20px 20px ;
     }
 
+    
     .chatbot-popup,
-    .user-info-popup { /* Apply to both popups */
-        right: 0;
-        bottom: 0;
-        height: 100%;
-        border-radius: 0;
-        width: 100%;
+    .user-info-popup { 
+        right:15px;
+        bottom: 80px;
+        height: 80%;
+        border-radius: 15px;
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+         transition: all 0.1s ease;
+        width: 90%;
+        position: fixed;
+        overflow: hidden;
     }
 
     .chatbot-popup .chat-header {
         padding: 12px 15px;
+
     }
 
     .chat-body {
@@ -727,11 +737,123 @@ body.show-chat-history .chat-history-sidebar {
         opacity: 0;
     }
 
+    
+
     .chat-history-sidebar {
-        width: 100%; /* Full width on smaller screens */
-        height: 100%;
-        top: 0;
-        margin-right: 0;
-        border-radius: 0;
+    position: fixed;
+    top: 12%;
+    right: -900px; /* Hidden by default */
+    margin-right: 3.5%;
+    height: 70%;
+    width: 350px;
+    background: #fff;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 998;
+    transition: right 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+}
+    
+
+} 
+
+
+
+/* For screens 499px and larger */
+@media (min-width: 499px) and (max-width: 768px) {
+    /* Chatbot base positioning */
+    #chatbot-toggler {
+        right: 40px;
+        bottom: 25px;
+        width: 50px;
+        height: 50px;
+    }
+
+
+    .chatbot-popup{
+    
+        right:15px;
+        bottom: 90px;  
+        border-radius: 15px;
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+         transition: all 0.1s ease;
+        width: 400px;
+        height: 500px;
+        position: fixed;
+        overflow: hidden;
+    }
+
+
+
+
+    
+    .user-info-popup {
+        right: 40px;
+        bottom: 100px;
+        width: 420px;
+        height: auto; 
+        max-height: 600px;
+        position: fixed;
+        overflow: hidden;
+    } 
+
+    /* Fix for R&D heading */
+    .header-info .logo-text {
+        display: block !important;
+        font-size: 1.3rem;
+        color: #fff;
+    }
+
+    /* Chat body adjustments */
+    .chat-body {
+        height: calc(80% - 55px); /* 120px accounts for header+footer */
+        padding: 20px;
+        margin-bottom: 0;
+        overflow-y: auto;
+    }
+
+    /* Proper chat history sidebar positioning */
+    .chat-history-sidebar {
+        position: fixed;
+        top: 9%; /* Matches chat popup top position */
+        right: -320px; /* Hidden by default */
+        width: 300px;
+        height: 400px; /* Matches chat popup height */
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        transition: right 0.3s ease;
+        /* z-index: 997;  */
+    }
+
+    /* When history is shown */
+    body.show-chat-history .chat-history-sidebar {
+        right: 2px; /* Positions to the left of chat popup */
+    }
+
+    /* Header adjustments */
+    .chat-header {
+        padding: 15px 20px;
+        border-radius: 15px 15px 0 0;
+    }
+
+    /* Footer adjustments */
+    .chat-footer {
+        padding: 15px 20px;
+        border-radius: 0 0 15px 15px;
+    }
+
+    /* History list items */
+    .history-list li {
+        padding: 12px 15px;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* Input field sizing */
+    .message-input {
+        font-size: 0.95rem;
+        padding: 12px 15px;
     }
 }
+
