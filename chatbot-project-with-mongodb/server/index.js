@@ -23,40 +23,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 
 
-// API endpoint to save user data  --> original with  email exist error show
-
-// app.post('/save-user', async (req, res) => {
-//     try {
-//         const { name, email } = req.body;
-        
-//         // Validate email format
-//         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-//             return res.status(400).json({ message: 'Please enter a valid email address' });
-//         }
-
-//         // Check if email already exists
-//         const existingUser = await User.findOne({ email });
-//         if (existingUser) {
-//             return res.status(400).json({ message: 'Email already exists' });
-//         }
-        
-//         // Create new user
-//         const newUser = new User({ name, email });
-//         await newUser.save();
-        
-//         res.status(201).json({ message: 'User saved successfully', user: newUser });
-//     } catch (error) {
-//         console.error('Error saving user:', error);
-//         if (error.code === 11000) {
-//             res.status(400).json({ message: 'Email already exists' });
-//         } else {
-//             res.status(500).json({ message: 'Error saving user', error: error.message });
-//         }
-//     }
-// });
-
-
-
+// API endpoint to save user data  
 
 
 // with no email exist 
