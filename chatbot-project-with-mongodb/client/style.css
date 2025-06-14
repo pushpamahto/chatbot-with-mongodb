@@ -703,9 +703,94 @@ body.show-chat-history .chat-history-sidebar {
     display: none;
 }
 
-/* .form-field input:invalid {
-    border-color: brown;
-} */
+
+
+
+/*  for delete all file button */
+
+/* Delete Confirmation Alert Styles */
+.delete-confirmation-alert {
+    position: absolute;
+    bottom: 70px; /* Position above the delete button */
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px); /* Match sidebar padding */
+    background: #f2efcb;
+    border-radius: 12px;
+    padding: 15px;
+    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); */
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    z-index: 10;
+    text-align: center;
+    border: 1px solid #c8b105;
+    animation: fadeIn 0.3s ease;
+    display: none; /* Hidden by default */
+}
+
+.delete-confirmation-alert.show {
+    display: block;
+}
+
+.delete-confirmation-alert p {
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.4;
+}
+
+.delete-confirmation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.delete-confirmation-buttons button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.delete-confirmation-buttons .confirm-delete {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+}
+
+.delete-confirmation-buttons .confirm-delete:hover {
+    background-color: #e60000;
+}
+
+.delete-confirmation-buttons .cancel-delete {
+    background-color: #f0f0f0;
+    color: #555;
+    border: 1px solid #ddd;
+}
+
+.delete-confirmation-buttons .cancel-delete:hover {
+    background-color: #e0e0e0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Add this to your existing media queries */
+@media (max-width: 498px) {
+    .delete-confirmation-alert {
+        width: calc(100% - 30px);
+        bottom: 70px;
+    }
+}
 
 
 
@@ -721,9 +806,26 @@ body.show-chat-history .chat-history-sidebar {
         padding: 20px 20px ;
     }
 
-    
-    .chatbot-popup,
+
+
+    /* provide details */
+
     .user-info-popup { 
+        right:15px;
+        bottom: 80px;
+        height: 50%;
+        border-radius: 15px;
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+         transition: all 0.1s ease;
+        width: 90%;
+        position: fixed;
+        overflow: hidden;
+    }
+
+
+
+    
+    .chatbot-popup { 
         right:15px;
         bottom: 80px;
         height: 80%;
@@ -762,6 +864,7 @@ body.show-chat-history .chat-history-sidebar {
     margin-right: 3.5%;
     height: 70%;
     width: 350px;
+    /* width: 250px; */
     background: #fff;
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
     z-index: 998;

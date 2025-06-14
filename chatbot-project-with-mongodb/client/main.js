@@ -1433,9 +1433,64 @@
 
 
 
-// --------------  added here time show ifor users ------------------------
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// --------------------- recent updated with only time show for users -----------------------------------------
 
 
 const chatBody = document.querySelector(".chat-body");
@@ -1566,6 +1621,13 @@ const formatChatTimestamp = (timestamp) => {
     }
 };
 
+// NEW: Function to format message time only (for chat form)
+const formatMessageTime = (timestamp) => {
+    if (!timestamp) return "";
+    const date = new Date(timestamp);
+    if (isNaN(date.getTime())) return "";
+    return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+};
 
 // Function to render chat history in the sidebar
 const renderChatHistory = () => {
@@ -1621,18 +1683,73 @@ const deleteChat = (idToDelete) => {
 };
 
 // MODIFIED: Function to delete all history for the current user
+
+
+
+
+// const deleteAllHistory = () => {
+//     if (confirm("Are you sure you want to delete all your chat history? This action cannot be undone.")) {
+//         if (!userInfo || !userInfo.email) return;
+//         const userHistoryKey = `chatHistory_${userInfo.email}`;
+        
+//         chatHistory = []; // Clear in-memory history
+//         localStorage.removeItem(userHistoryKey); // Remove this user's data from storage
+        
+//         renderChatHistory();
+//         startNewChat();
+//     }
+// };
+
+
+// for demo 
 const deleteAllHistory = () => {
-    if (confirm("Are you sure you want to delete all your chat history? This action cannot be undone.")) {
-        if (!userInfo || !userInfo.email) return;
-        const userHistoryKey = `chatHistory_${userInfo.email}`;
+    // Create or show the styled confirmation alert
+    let alertDiv = document.querySelector(".delete-confirmation-alert");
+    if (!alertDiv) {
+        alertDiv = document.createElement("div");
+        alertDiv.className = "delete-confirmation-alert";
+        alertDiv.innerHTML = `
+            <p>Are you sure you want to delete all your chat history?</p>
+            <div class="delete-confirmation-buttons">
+                <button class="confirm-delete">Delete</button>
+                <button class="cancel-delete">Cancel</button>
+            </div>
+        `;
+        deleteAllHistoryButton.parentNode.insertBefore(alertDiv, deleteAllHistoryButton);
         
-        chatHistory = []; // Clear in-memory history
-        localStorage.removeItem(userHistoryKey); // Remove this user's data from storage
+        // Add event listeners to the buttons
+        alertDiv.querySelector(".confirm-delete").addEventListener("click", () => {
+            if (!userInfo || !userInfo.email) return;
+            const userHistoryKey = `chatHistory_${userInfo.email}`;
+            
+            chatHistory = []; // Clear in-memory history
+            localStorage.removeItem(userHistoryKey); // Remove this user's data from storage
+            
+            renderChatHistory();
+            startNewChat();
+            alertDiv.classList.remove("show");
+        });
         
-        renderChatHistory();
-        startNewChat();
+        alertDiv.querySelector(".cancel-delete").addEventListener("click", () => {
+            alertDiv.classList.remove("show");
+        });
     }
+    
+    alertDiv.classList.add("show");
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const loadChat = (chatId) => {
     const chat = chatHistory.find(c => c.id === chatId);
@@ -1656,7 +1773,7 @@ const loadChat = (chatId) => {
             content += `<svg class="bot-avatar" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 1024 1024"><path d="M738.3 287.6H285.7c-59 0-106.8 47.8-106.8 106.8v303.1c0 59 47.8 106.8 106.8 106.8h81.5v111.1c0 .7.8 1.1 1.4.7l166.9-110.6 41.8-.8h117.4l43.6-.4c59 0 106.8-47.8 106.8-106.8V394.5c0-59-47.8-106.9-106.8-106.9zM351.7 448.2c0-29.5 23.9-53.5 53.5-53.5s53.5 23.9 53.5 53.5-23.9 53.5-53.5 53.5-53.5-23.9-53.5-53.5zm157.9 267.1c-67.8 0-123.8-47.5-132.3-109h264.6c-8.6 61.5-64.5 109-132.3 109zm110-213.7c-29.5 0-53.5-23.9-53.5-53.5s23.9-53.5 53.5-53.5 53.5 23.9 53.5 53.5-23.9 53.5-53.5 53.5zM867.2 644.5V453.1h26.5c19.4 0 35.1 15.7 35.1 35.1v121.1c0 19.4-15.7 35.1-35.1 35.1h-26.5zM95.2 609.4V488.2c0-19.4 15.7-35.1 35.1-35.1h26.5v191.3h-26.5c-19.4 0-35.1-15.7-35.1-35.1zM561.5 149.6c0 23.4-15.6 43.3-36.9 49.7v44.9h-30v-44.9c-21.4-6.5-36.9-26.3-36.9-49.7 0-28.6 23.3-51.9 51.9-51.9s51.9 23.3 51.9 51.9z"></path></svg><div class="message-text">${messageContent}</div>`;
         } else {
             classes.push("user-message");
-            const timestamp = msg.timestamp ? formatChatTimestamp(msg.timestamp) : formatChatTimestamp(Date.now());
+            const timestamp = msg.timestamp ? formatMessageTime(msg.timestamp) : formatMessageTime(Date.now());
             content += `<div class="message-text">${msg.content}</div>
                          ${msg.type === "image" && msg.fileData ? `<img src="data:${msg.mimeType};base64,${msg.fileData}" class="attachment" />` : ""}
                          <div class="user-message-time">${timestamp}</div>`;
@@ -1814,7 +1931,7 @@ const handleOutgoingMessage = (e) => {
     }
 
     const userMessageContent = userData.message;
-    const timestamp = formatChatTimestamp(Date.now());
+    const timestamp = formatMessageTime(Date.now());
     const messageHTML = `<div class="message-text">${userMessageContent}</div>
                          ${userData.file.data ? `<img src="data:${userData.file.mime_type};base64,${userData.file.data}" class="attachment" />` : ""}
                          <div class="user-message-time">${timestamp}</div>`;
@@ -2062,4 +2179,3 @@ voiceAssistButton.addEventListener("click", () => {
 // --- Initialize ---
 injectHistoryStyles(); // Call the function to add our new styles
 setupVoiceRecognition();
-
