@@ -784,6 +784,43 @@ body.show-chat-history .chat-history-sidebar {
     }
 }
 
+
+/* Add to your CSS file  pdf*/
+.chat-body .user-message .pdf-preview {
+    width: 200px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #ddd;
+}
+
+.chat-body .user-message .pdf-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.chat-body .user-message .pdf-filename {
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #333;
+}
+
+@media (max-width: 498px) {
+    .chat-body .user-message .pdf-preview {
+        width: 150px;
+    }
+}
+
+
+
+
 /* Add this to your existing media queries */
 @media (max-width: 498px) {
     .delete-confirmation-alert {
